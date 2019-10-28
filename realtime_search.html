@@ -16,6 +16,12 @@
     <p>
       {{ message }}
     </p>
+    <ul>
+      <li v-for="item in items">
+        <!-- {{ item.title }} -->
+        <a v-bind:href="item.url" target="_blanc">{{ item.title }}</a> likes: {{ item.likes_count }}
+      </li>
+    </ul>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
