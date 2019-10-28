@@ -6,19 +6,28 @@ var app = new Vue({
     message: ""
   },
   watch: {
-
+    // 検索欄が更新されたらdebouncedGetAnswerを実行する
+    keyword: function (newKeyword, oldKeyword) {
+      console.log(newKeyword)
+      this.message = "Waiting for you to srop typing..."
+      this.debouncedGetAnswer()
+    }
   },
   // Vueインスタンス生成時に実行される処理
   created: function () {
     // テスト用
-    this.keyword = "JavaScript"
-    this.getAnswer()
+    // this.keyword = "JavaScript"
+    // this.getAnswer()
+
+    // 指定時間内に同一の操作があれば処理を実行しない→apiへの接続を減らすため
+    this.debouncedGetAnswer = _.debounce(this.getAnswer, 1000)
   },
   methods: {
     getAnswer: function () {
-      // 検索文字が何も指定されていなければ、itemsを空にする
+      // 検索文字が何も指定されていなければ、itemsとmessageを空にする
       if (this.keyword === "") {
-        this.item = null
+        this.items = null
+        this.message = ""
         return
       }
 
